@@ -12,7 +12,7 @@ public class Percolation {
     public static final int SITE_OPEN = 1;
     // create n-by-n grid, with all sites blocked
     public Percolation(int n){ 
-        grid = new int[n];
+        grid = new int[n*n];
         virtual_top  = n*n -1 + 1;
         virtual_bot  = n*n -1 + 2;
         uf = new WeightedQuickUnionUF(n*n + 2);
@@ -42,7 +42,7 @@ public class Percolation {
             for (int j = col - 1; j < col +2; j++) {
                 int temp_index = size*i + col;
                 // check if the site is adjacent or not?
-                if( (i == row) || (j == col))
+                if( ((i == row) || (j == col)) && (i >= 0) && (j >= 0))
                 {
                     // If the site is open then connect to it
                     if(isOpen(i,j) == true){
@@ -95,5 +95,10 @@ public class Percolation {
 
     public static void main(String[] args) { 
         System.out.println("Hello, World");
+        Percolation object = new Percolation(5);
+        object.open(0,0);
+        if(object.isOpen(0,0) == true){
+            System.out.println("site 0,0 open");
+        }
     }
 }
