@@ -7,6 +7,7 @@ public class Percolation {
     private int size;
     private int virtual_top = 0;
     private int virtual_bot = 0;
+    private int openSitesNum = 0;
     private WeightedQuickUnionUF uf;
     public static final int SITE_BLOCKED = 0;
     public static final int SITE_OPEN = 1;
@@ -32,11 +33,15 @@ public class Percolation {
     // open site (row, col) if it is not open already
     public void open(int row, int col){
         System.out.println("*********");
+        if(row < 0 || col < 0 || row > (size -1) || col > (size -1))
+            return;
+
         int current_index = row* size + col;
-         System.out.println(current_index);
+        System.out.println(current_index);
         // Mark new site as open
         if(grid[current_index] != SITE_OPEN){
             grid[current_index] = SITE_OPEN;
+            openSitesNum++;
         }
 
         // connect it to all of its adjacent open sites
@@ -58,7 +63,7 @@ public class Percolation {
     // is site (row, col) open?
     public boolean isOpen(int row, int col){
         int index = row* size + col;
-        if(row < 0 || col < 0 || row > 4 || col > 4)
+        if(row < 0 || col < 0 || row > (size -1) || col > (size -1))
             return false;
 
         if(grid[index] == SITE_OPEN){
@@ -91,34 +96,21 @@ public class Percolation {
 
     // number of open sites
     public int numberOfOpenSites(){
-        return 1;
+        return openSitesNum;
     }
 
     // does the system percolate?
     public boolean percolates(){
-        return true;
+        boolean isPercolates = false;
+        if(uf.connected(virtual_top, virtual_bot) == true){
+            isPercolates = true;
+        }
+        return isPercolates;
     }
 
     public static void main(String[] args) { 
         System.out.println("Hello, World");
         Percolation object = new Percolation(5);
-        // object.open(0,0);
-        // object.open(0,1);
-        // object.open(1,1);
-        // object.open(1,2);
-        // object.open(2,2);
-        // object.open(2,3);
-        // object.open(3,3);
-        // object.open(3,4);
-        // object.open(4,4);
-        // if(object.isOpen(0,1) == true){
-        //     System.out.println("site 0,0 open");
-        // }
-
-        // if(object.uf.connected(0, 2) == true)
-        // {
-        //     System.out.println("site 1,2 and 2,2 are connected to each other");
-        // }
 
         // start test open method
         System.out.println("test open method");
@@ -173,32 +165,28 @@ public class Percolation {
         Percolation object1 = new Percolation(5);
         object1.open(1,2);
 
-        if(object1.uf.connected(7, 6) == true)
-        {
+        if(object1.uf.connected(7, 6) == true){
             System.out.println("test open 7 failed");
         }
         else{
             System.out.println("test open 7 passed");
         }
 
-        if(object1.uf.connected(7, 2) == true)
-        {
+        if(object1.uf.connected(7, 2) == true){
             System.out.println("test open 7 failed");
         }
         else{
             System.out.println("test open 7 passed");
         }
 
-        if(object1.uf.connected(7, 8) == true)
-        {
+        if(object1.uf.connected(7, 8) == true){
             System.out.println("test open 7 failed");
         }
         else{
             System.out.println("test open 7 passed");
         }
 
-        if(object1.uf.connected(7, 12) == true)
-        {
+        if(object1.uf.connected(7, 12) == true){
             System.out.println("test open 7 failed");
         }
         else{
@@ -207,32 +195,28 @@ public class Percolation {
 
         object1.open(1,1);
 
-        if(object1.uf.connected(7, 6) == true)
-        {
+        if(object1.uf.connected(7, 6) == true){
             System.out.println("test open 8 passed");
         }
         else{
             System.out.println("test open 8 failed");
         }
 
-        if(object1.uf.connected(7, 2) == true)
-        {
+        if(object1.uf.connected(7, 2) == true){
             System.out.println("test open 8 failed");
         }
         else{
             System.out.println("test open 8 passed");
         }
 
-        if(object1.uf.connected(7, 8) == true)
-        {
+        if(object1.uf.connected(7, 8) == true){
             System.out.println("test open 8 failed");
         }
         else{
             System.out.println("test open 8 passed");
         }
 
-        if(object1.uf.connected(7, 12) == true)
-        {
+        if(object1.uf.connected(7, 12) == true){
             System.out.println("test open 8 failed");
         }
         else{
@@ -241,32 +225,28 @@ public class Percolation {
 
         object1.open(0,2);
 
-        if(object1.uf.connected(7, 2) == true)
-        {
+        if(object1.uf.connected(7, 2) == true){
             System.out.println("test open 9 passed");
         }
         else{
             System.out.println("test open 9 failed");
         }
 
-        if(object1.uf.connected(7, 6) == true)
-        {
+        if(object1.uf.connected(7, 6) == true){
             System.out.println("test open 9 passed");
         }
         else{
             System.out.println("test open 9 failed");
         }
 
-        if(object1.uf.connected(7, 8) == true)
-        {
+        if(object1.uf.connected(7, 8) == true){
             System.out.println("test open 9 failed");
         }
         else{
             System.out.println("test open 9 passed");
         }
 
-        if(object1.uf.connected(7, 12) == true)
-        {
+        if(object1.uf.connected(7, 12) == true){
             System.out.println("test open 9 failed");
         }
         else{
@@ -275,32 +255,28 @@ public class Percolation {
 
         object1.open(1,3);
 
-        if(object1.uf.connected(7, 2) == true)
-        {
+        if(object1.uf.connected(7, 2) == true){
             System.out.println("test open 9 passed");
         }
         else{
             System.out.println("test open 9 failed");
         }
 
-        if(object1.uf.connected(7, 6) == true)
-        {
+        if(object1.uf.connected(7, 6) == true){
             System.out.println("test open 9 passed");
         }
         else{
             System.out.println("test open 9 failed");
         }
 
-        if(object1.uf.connected(7, 8) == true)
-        {
+        if(object1.uf.connected(7, 8) == true){
             System.out.println("test open 9 passed");
         }
         else{
             System.out.println("test open 9 failed");
         }
 
-        if(object1.uf.connected(7, 12) == true)
-        {
+        if(object1.uf.connected(7, 12) == true){
             System.out.println("test open 9 failed");
         }
         else{
@@ -309,36 +285,106 @@ public class Percolation {
 
 
         object1.open(2,2);
-        if(object1.uf.connected(7, 2) == true)
-        {
+        if(object1.uf.connected(7, 2) == true){
             System.out.println("test open 9 passed");
         }
         else{
             System.out.println("test open 9 failed");
         }
 
-        if(object1.uf.connected(7, 6) == true)
-        {
+        if(object1.uf.connected(7, 6) == true){
             System.out.println("test open 9 passed");
         }
         else{
             System.out.println("test open 9 failed");
         }
 
-        if(object1.uf.connected(7, 8) == true)
-        {
+        if(object1.uf.connected(7, 8) == true){
             System.out.println("test open 9 passed");
         }
         else{
             System.out.println("test open 9 failed");
         }
 
-        if(object1.uf.connected(7, 12) == true)
-        {
+        if(object1.uf.connected(7, 12) == true){
             System.out.println("test open 9 passed");
         }
         else{
             System.out.println("test open 9 failed");
+        }
+
+        // start test isFull function
+
+        Percolation object2 = new Percolation(5);
+        object2.open(1,2);
+
+        if(object2.uf.connected(7, object2.virtual_top) == true){
+            System.out.println("test isfull 1 failed");
+        }
+        else{
+            System.out.println("test isfull 1 passed");
+        }
+
+        object2.open(0,2);
+
+        if(object2.uf.connected(7, object2.virtual_top) == true){
+            System.out.println("test isfull 2 passed");
+        }
+        else{
+            System.out.println("test isfull 2 failed");
+        }
+
+        object2.open(1,1);
+
+        if(object2.uf.connected(6, object2.virtual_top) == true){
+            System.out.println("test isfull 3 passed");
+        }
+        else{
+            System.out.println("test isfull 3 failed");
+        }
+
+        if(object2.numberOfOpenSites() == 3){
+            System.out.println("test isfull 4 passed");
+        }
+        else{
+            System.out.println("test isfull 4 failed");
+        }
+
+        // start test isPercolation function
+        Percolation object3 = new Percolation(5);
+
+        if(object3.percolates() == true){
+            System.out.println("test isPercolation 1 failed");
+        }
+
+        object3.open(0,0);
+
+        if(object3.percolates() == true){
+            System.out.println("test isPercolation 2 failed");
+        }
+
+        object3.open(1,0);
+
+        if(object3.percolates() == true){
+            System.out.println("test isPercolation 3 failed");
+        }
+
+        object3.open(2,0);
+
+        if(object3.percolates() == true){
+            System.out.println("test isPercolation 4 failed");
+        }
+
+        object3.open(3,0);
+
+        if(object3.percolates() == true){
+            System.out.println("test isPercolation 5 failed");
+        }
+
+        object3.open(4,0);
+
+        if(object3.percolates() == true){
+            System.out.println("test isPercolation 5 passed");
         }
     }
 }
