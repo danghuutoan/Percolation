@@ -31,7 +31,9 @@ public class Percolation {
     }
     // open site (row, col) if it is not open already
     public void open(int row, int col){
+        System.out.println("*********");
         int current_index = row* size + col;
+         System.out.println(current_index);
         // Mark new site as open
         if(grid[current_index] != SITE_OPEN){
             grid[current_index] = SITE_OPEN;
@@ -40,12 +42,13 @@ public class Percolation {
         // connect it to all of its adjacent open sites
         for(int i = row -1; i < row + 2; i++){
             for (int j = col - 1; j < col +2; j++) {
-                int temp_index = size*i + col;
+                int temp_index = size*i + j;
                 // check if the site is adjacent or not?
-                if( ((i == row) || (j == col)) && (i >= 0) && (j >= 0))
-                {
+                if( ((i == row) || (j == col)) ){
                     // If the site is open then connect to it
-                    if(isOpen(i,j) == true){
+                    if((isOpen(i,j) == true)){
+                        System.out.println(temp_index);
+                        System.out.println(current_index);
                         uf.union(temp_index, current_index);
                     }
                 }
@@ -55,6 +58,9 @@ public class Percolation {
     // is site (row, col) open?
     public boolean isOpen(int row, int col){
         int index = row* size + col;
+        if(row < 0 || col < 0 || row > 4 || col > 4)
+            return false;
+
         if(grid[index] == SITE_OPEN){
             return true;
         }
@@ -96,9 +102,243 @@ public class Percolation {
     public static void main(String[] args) { 
         System.out.println("Hello, World");
         Percolation object = new Percolation(5);
+        // object.open(0,0);
+        // object.open(0,1);
+        // object.open(1,1);
+        // object.open(1,2);
+        // object.open(2,2);
+        // object.open(2,3);
+        // object.open(3,3);
+        // object.open(3,4);
+        // object.open(4,4);
+        // if(object.isOpen(0,1) == true){
+        //     System.out.println("site 0,0 open");
+        // }
+
+        // if(object.uf.connected(0, 2) == true)
+        // {
+        //     System.out.println("site 1,2 and 2,2 are connected to each other");
+        // }
+
+        // start test open method
+        System.out.println("test open method");
         object.open(0,0);
-        if(object.isOpen(0,0) == true){
-            System.out.println("site 0,0 open");
+        object.open(0,4);
+        object.open(4,0);
+        object.open(4,4);
+        object.open(2,2);
+
+        if(object.isOpen(0,0) != true){
+            System.out.println("test open fail");
+        }
+        else{
+            System.out.println("test open1 pass");
+        }
+
+        if(object.isOpen(0,4) != true){
+            System.out.println("test open fail");
+        }
+        else{
+            System.out.println("test open2 pass");
+        }
+
+        if(object.isOpen(4,0) != true){
+            System.out.println("test open fail");
+        }
+        else{
+            System.out.println("test open3 pass");
+        }
+
+        if(object.isOpen(4,4) != true){
+            System.out.println("test open fail");
+        }
+        else{
+            System.out.println("test open4 pass");
+        }
+
+        if(object.isOpen(2,2) != true){
+            System.out.println("test open fail");
+        }
+        else{
+            System.out.println("test open5 pass");
+        }
+
+        if(object.isOpen(2,1) == true){
+            System.out.println("test open fail");
+        }
+        else{
+            System.out.println("test open6 pass");
+        }
+
+        Percolation object1 = new Percolation(5);
+        object1.open(1,2);
+
+        if(object1.uf.connected(7, 6) == true)
+        {
+            System.out.println("test open 7 failed");
+        }
+        else{
+            System.out.println("test open 7 passed");
+        }
+
+        if(object1.uf.connected(7, 2) == true)
+        {
+            System.out.println("test open 7 failed");
+        }
+        else{
+            System.out.println("test open 7 passed");
+        }
+
+        if(object1.uf.connected(7, 8) == true)
+        {
+            System.out.println("test open 7 failed");
+        }
+        else{
+            System.out.println("test open 7 passed");
+        }
+
+        if(object1.uf.connected(7, 12) == true)
+        {
+            System.out.println("test open 7 failed");
+        }
+        else{
+            System.out.println("test open 7 passed");
+        }
+
+        object1.open(1,1);
+
+        if(object1.uf.connected(7, 6) == true)
+        {
+            System.out.println("test open 8 passed");
+        }
+        else{
+            System.out.println("test open 8 failed");
+        }
+
+        if(object1.uf.connected(7, 2) == true)
+        {
+            System.out.println("test open 8 failed");
+        }
+        else{
+            System.out.println("test open 8 passed");
+        }
+
+        if(object1.uf.connected(7, 8) == true)
+        {
+            System.out.println("test open 8 failed");
+        }
+        else{
+            System.out.println("test open 8 passed");
+        }
+
+        if(object1.uf.connected(7, 12) == true)
+        {
+            System.out.println("test open 8 failed");
+        }
+        else{
+            System.out.println("test open 8 passed");
+        }
+
+        object1.open(0,2);
+
+        if(object1.uf.connected(7, 2) == true)
+        {
+            System.out.println("test open 9 passed");
+        }
+        else{
+            System.out.println("test open 9 failed");
+        }
+
+        if(object1.uf.connected(7, 6) == true)
+        {
+            System.out.println("test open 9 passed");
+        }
+        else{
+            System.out.println("test open 9 failed");
+        }
+
+        if(object1.uf.connected(7, 8) == true)
+        {
+            System.out.println("test open 9 failed");
+        }
+        else{
+            System.out.println("test open 9 passed");
+        }
+
+        if(object1.uf.connected(7, 12) == true)
+        {
+            System.out.println("test open 9 failed");
+        }
+        else{
+            System.out.println("test open 9 passed");
+        }
+
+        object1.open(1,3);
+
+        if(object1.uf.connected(7, 2) == true)
+        {
+            System.out.println("test open 9 passed");
+        }
+        else{
+            System.out.println("test open 9 failed");
+        }
+
+        if(object1.uf.connected(7, 6) == true)
+        {
+            System.out.println("test open 9 passed");
+        }
+        else{
+            System.out.println("test open 9 failed");
+        }
+
+        if(object1.uf.connected(7, 8) == true)
+        {
+            System.out.println("test open 9 passed");
+        }
+        else{
+            System.out.println("test open 9 failed");
+        }
+
+        if(object1.uf.connected(7, 12) == true)
+        {
+            System.out.println("test open 9 failed");
+        }
+        else{
+            System.out.println("test open 9 passed");
+        }
+
+
+        object1.open(2,2);
+        if(object1.uf.connected(7, 2) == true)
+        {
+            System.out.println("test open 9 passed");
+        }
+        else{
+            System.out.println("test open 9 failed");
+        }
+
+        if(object1.uf.connected(7, 6) == true)
+        {
+            System.out.println("test open 9 passed");
+        }
+        else{
+            System.out.println("test open 9 failed");
+        }
+
+        if(object1.uf.connected(7, 8) == true)
+        {
+            System.out.println("test open 9 passed");
+        }
+        else{
+            System.out.println("test open 9 failed");
+        }
+
+        if(object1.uf.connected(7, 12) == true)
+        {
+            System.out.println("test open 9 passed");
+        }
+        else{
+            System.out.println("test open 9 failed");
         }
     }
 }
