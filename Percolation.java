@@ -1,5 +1,3 @@
-import edu.princeton.cs.algs4.StdRandom;
-import edu.princeton.cs.algs4.StdStats;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
@@ -32,12 +30,10 @@ public class Percolation {
     }
     // open site (row, col) if it is not open already
     public void open(int row, int col){
-        System.out.println("*********");
         if(row < 0 || col < 0 || row > (size -1) || col > (size -1))
             return;
 
         int current_index = row* size + col;
-        System.out.println(current_index);
         // Mark new site as open
         if(grid[current_index] != SITE_OPEN){
             grid[current_index] = SITE_OPEN;
@@ -52,8 +48,6 @@ public class Percolation {
                 if( ((i == row) || (j == col)) ){
                     // If the site is open then connect to it
                     if((isOpen(i,j) == true)){
-                        System.out.println(temp_index);
-                        System.out.println(current_index);
                         uf.union(temp_index, current_index);
                     }
                 }
