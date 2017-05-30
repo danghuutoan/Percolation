@@ -2,6 +2,7 @@ import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 import java.lang.Math;
 import java.lang.IllegalArgumentException;
+import edu.princeton.cs.algs4.Stopwatch;
 
 public class PercolationStats {
 	private double fraction[];
@@ -67,9 +68,11 @@ public class PercolationStats {
 	}
 
 	public static void main(String[] args){
+		Stopwatch timer = new Stopwatch();
 		PercolationStats pecostats = new PercolationStats(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
 		System.out.println("mean = " + pecostats.mean());
 		System.out.println("stddev = " + pecostats.stddev());
 		System.out.println("95% confidence interval = [ " + pecostats.confidenceLo() + ", " + pecostats.confidenceHi() + " ]");
+		System.out.println("running time = " + timer.elapsedTime() + " s");
 	}
 }
